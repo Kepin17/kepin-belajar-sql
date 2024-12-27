@@ -1,0 +1,35 @@
+-- Active: 1729932689235@@127.0.0.1@3306@music
+CREATE DATABASE music; 
+use music;
+
+CREATE TABLE MsBranch (
+  BranchID VARCHAR(6) PRIMARY KEY,
+  BranchName VARCHAR(50) NOT NULL,
+  Address VARCHAR(100) NOT NULL,
+  Phone VARCHAR(50),
+  CONSTRAINT CheckBran1 CHECK (CHAR_LENGTH(BranchID) = 5),
+  CONSTRAINT CheckBran2 CHECK (BranchID REGEXP '^BR[0-9][0-9][0-9]$')
+)
+
+
+CREATE TABLE MsMusicType (
+  MusicInsTypeID VARCHAR(6) PRIMARY KEY,
+  MusicInsTypeName VARCHAR(50) NOT NULL,
+  CONSTRAINT CheckMusi1 CHECK (CHAR_LENGTH(MusicInsTypeID) = 5),
+  CONSTRAINT CheckMusi2 CHECK (MusicInsTypeID REGEXP '^MT[0-9][0-9][0-9]$')
+)
+
+CREATE TABLE MsEmployee (
+  EmployeeID VARCHAR(6) PRIMARY KEY,
+  EmployeeName VARCHAR(50) NOT NULL,
+  Address VARCHAR(100) NOT NULL,
+  Phone VARCHAR(50),
+  Gender CHAR(1) NOT NULL,
+  BirthDate DATETIME,
+  Salary DECIMAL(10,2),
+  BRANCHID VARCHAR(6),
+  CONSTRAINT CheckEmpl1 CHECK (CHAR_LENGTH(EmployeeID) = 5),
+  CONSTRAINT CheckEmpl2 CHECK (EmployeeID REGEXP '^EM[0-9][0-9][0-9]$'),
+  CONSTRAINT CheckEmpl3 CHECK (Gender IN ('M', 'F')),
+  CONSTRAINT FK_MsEmployee FOREIGN KEY (BRANCHID) REFERENCES MsBranch(BranchID) 
+)
